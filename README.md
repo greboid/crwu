@@ -1,1 +1,1 @@
-CRWU - Compose Registry Webhook Updater (I am so so bad at names)
+RWTCCUS - Registry Webhook Triggered Composefile Container Update System (I am so so so bad at names)

@@ -1,0 +1,40 @@
+= RWTCCUS
+
+Registry Webhook Triggered Composefile Container Update System.  I'll rename this when stable, the current name is an in joke for my inability to name projects sensibly.
+
+== Status
+At the moment this is a WIP and doesn't function.  Restarting the containers may be done nicely through the API, but may end up being done by executing compose.
+
+== Why?
+
+Why not just use watchtower? Watchtower has to poll the registry to wait for updates, this is fairly inefficient but is sometimes the only option. If you can get webhooks from the registry however, it is more efficient to listen to these and update containers as required.
+
+== How
+
+This consists of two binaries, one that listens for registry events, the other that triggers updates, the docker socket it only exposed to the executor.  The executor then checks if a matching container is running and updates this as needed.
+
+== Example Composefile
+
+[source]
+----
+networks:
+  public:
+  internal:
+services:
+  listener:
+    image: ghcr.io/greboid/rwtccus/listener:latest
+    ports: 80:3000
+    environment:
+      TOKEN: RandomAuthToken
+    networks:
+      - public
+      - internal
+  executor:
+    image: ghcr.io/greboid/rwtccus/executor:latest
+    environment:
+      TOKEN: RandomAuthToken
+    networks:
+      - internal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+----

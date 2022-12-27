@@ -15,7 +15,7 @@ This consists of two binaries, one that listens for registry events, the other t
 
 == Example Composefile
 
-[source]
+[source,yaml,line-comment=#]
 ----
 networks:
   public:
@@ -38,5 +38,6 @@ services:
     networks:
       - internal
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock # <1>
 ----
+<1> This can be replaced with a DOCKER_HOST environmental variable if you are using tcp

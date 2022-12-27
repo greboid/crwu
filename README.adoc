@@ -22,7 +22,8 @@ networks:
   internal:
 services:
   listener:
-    image: ghcr.io/greboid/rwtccus/listener:latest
+    image: ghcr.io/greboid/rwtccus:latest
+    command: /listener
     ports: 80:3000
     environment:
       TOKEN: RandomAuthToken
@@ -30,7 +31,8 @@ services:
       - public
       - internal
   executor:
-    image: ghcr.io/greboid/rwtccus/executor:latest
+    image: ghcr.io/greboid/rwtccus:latest
+    command: /executor
     environment:
       TOKEN: RandomAuthToken
     networks:

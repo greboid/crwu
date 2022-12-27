@@ -31,18 +31,7 @@ func LoggerMiddleware(logger *zerolog.Logger) func(next http.Handler) http.Handl
 func AuthMiddleware(authToken string) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			auth := r.Header.Get("Authorization")
-			if auth == "" {
-				render.Status(r, http.StatusUnauthorized)
-			}
-			splitAuth := strings.Split(auth, "Bearer")
-			if len(splitAuth) != 2 {
-				render.Status(r, http.StatusUnauthorized)
-			}
-			suppliedToken := strings.TrimSpace(splitAuth[1])
-			if len(suppliedToken) < 1 {
-				render.Status(r, http.StatusUnauthorized)
-			}
+			suppliedToken := r.Header.Get("Authorization")
 			if authToken != suppliedToken {
 				render.Status(r, http.StatusUnauthorized)
 				return
@@ -51,4 +40,19 @@ func AuthMiddleware(authToken string) func(next http.Handler) http.Handler {
 			return
 		})
 	}
+}
+
+func getAuthHeader(authHeader string) string {
+	if authHeader == "" {
+		return ""
+	}
+	splitAuth := strings.Split(authHeader, "Bearer")
+	if len(splitAuth) != 2 {
+		return ""
+	}
+	token := strings.TrimSpace(splitAuth[1])
+	if len(token) < 1 {
+		return ""
+	}
+	return token
 }

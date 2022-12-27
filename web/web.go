@@ -50,7 +50,7 @@ func (w *Web) Init(port int, handler http.Handler) {
 
 func (w *Web) Run() error {
 	if w.Server == nil {
-		return fmt.Errorf("Server must be initialised")
+		return fmt.Errorf("server must be initialised")
 	}
 	g := new(errgroup.Group)
 	g.Go(func() error {

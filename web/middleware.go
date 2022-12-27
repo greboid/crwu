@@ -31,9 +31,10 @@ func LoggerMiddleware(logger *zerolog.Logger) func(next http.Handler) http.Handl
 func AuthMiddleware(authToken string) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			suppliedToken := r.Header.Get("Authorization")
+			suppliedToken := getAuthHeader(r.Header.Get("Authorization"))
 			if authToken != suppliedToken {
 				render.Status(r, http.StatusUnauthorized)
+				render.JSON(w, r, map[string]string{"error": "unauthorised"})
 				return
 			}
 			next.ServeHTTP(w, r)

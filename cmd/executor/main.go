@@ -1,13 +1,9 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"github.com/csmith/envflag"
-	"github.com/docker/cli/cli/command"
-	"github.com/docker/compose/v2/pkg/api"
-	"github.com/docker/compose/v2/pkg/compose"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
@@ -34,7 +30,7 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(web.AuthMiddleware(*AuthToken))
 	r.Use(web.LoggerMiddleware(logger))
-	r.Post("/run", handleRun)
+	r.Post("/", handle)
 	log.Info().Str("URL", fmt.Sprintf("http://0.0.0.0:%d", *WebPort)).Msg("Starting webserver")
 	ws := web.Web{}
 	ws.Init(*WebPort, r)
@@ -44,43 +40,7 @@ func main() {
 	log.Info().Msg("Exiting")
 }
 
-func doComposeThings() {
-	dcli, err := command.NewDockerCli()
-	if err != nil {
-		log.Fatal().Err(err).Msg("Can't create Docker CLI")
-	}
-	s := compose.NewComposeService(dcli)
-	err = s.Pull(context.Background(), nil, api.PullOptions{Quiet: true})
-	if err != nil {
-		log.Fatal().Err(err).Msg("Unable to pull")
-	}
-	err = s.Up(context.Background(), nil, api.UpOptions{
-		Create: api.CreateOptions{
-			Services:             nil,
-			RemoveOrphans:        false,
-			IgnoreOrphans:        false,
-			Recreate:             "",
-			RecreateDependencies: "",
-			Inherit:              false,
-			Timeout:              nil,
-			QuietPull:            false,
-		},
-		Start: api.StartOptions{
-			Project:      nil,
-			Attach:       nil,
-			AttachTo:     nil,
-			CascadeStop:  false,
-			ExitCodeFrom: "",
-			Wait:         false,
-			Services:     nil,
-		},
-	})
-	if err != nil {
-		log.Fatal().Err(err).Msg("Unable to up")
-	}
-}
-
-func handleRun(_ http.ResponseWriter, r *http.Request) {
+func handle(_ http.ResponseWriter, r *http.Request) {
 	render.Status(r, http.StatusOK)
 }
 

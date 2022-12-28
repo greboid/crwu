@@ -2,6 +2,7 @@ package containers
 
 import (
 	"context"
+	"github.com/docker/compose/v2/pkg/api"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
@@ -32,7 +33,7 @@ func GetMatchingContainers(name string) ([]types.Container, []types.Container, e
 
 func isCompose(container types.Container) bool {
 	for key := range container.Labels {
-		if key == "com.docker.compose.project" {
+		if key == api.ProjectLabel {
 			return true
 		}
 	}

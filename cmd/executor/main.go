@@ -23,7 +23,6 @@ var (
 func main() {
 	envflag.Parse()
 	logger := createLogger(*Debug)
-	log.Info().Msg("Starting rwtccus executor")
 	r := chi.NewRouter()
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(middleware.URLFormat)

@@ -3,7 +3,7 @@
 Registry Webhook Triggered Composefile Container Update System.  I'll rename this when stable, the current name is an in joke for my inability to name projects sensibly.
 
 == Status
-At the moment this is a WIP and doesn't function.  Restarting the containers may be done nicely through the API, but may end up being done by executing compose.
+I've written some code that may or may not work, but its completely untested
 
 == Why?
 

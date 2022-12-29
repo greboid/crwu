@@ -41,6 +41,7 @@ func UpdateMatchingContainers(name string) error {
 			log.Error().Err(err).Str("Project", item.name).Msg("Unable to update project")
 		}
 	})
+	return nil
 }
 
 func GetMatchingContainers(name string) ([]dtypes.Container, []dtypes.Container, error) {

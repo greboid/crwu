@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
+	"github.com/greboid/rwtccus/containers"
 	"github.com/greboid/rwtccus/web"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -15,9 +16,9 @@ import (
 )
 
 var (
-	WebPort   = flag.Int("web-port", 3000, "Port for webserver")
-	Debug     = flag.Bool("debug", true, "Enable debug logging")
-	AuthToken = flag.String("token", "", "Token sent in the as auth bearer to validate request")
+	WebPort     = flag.Int("web-port", 3000, "Port for webserver")
+	Debug       = flag.Bool("debug", true, "Enable debug logging")
+	InboundAuth = flag.String("in-token", "", "Token sent in the as auth bearer to validate request")
 )
 
 func main() {
@@ -27,7 +28,7 @@ func main() {
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(middleware.URLFormat)
 	r.Use(middleware.Recoverer)
-	r.Use(web.AuthMiddleware(*AuthToken))
+	r.Use(web.AuthMiddleware(*InboundAuth))
 	r.Use(web.LoggerMiddleware(logger))
 	r.Post("/", handle)
 	log.Info().Str("URL", fmt.Sprintf("http://0.0.0.0:%d", *WebPort)).Msg("Starting webserver")
@@ -39,8 +40,30 @@ func main() {
 	log.Info().Msg("Exiting")
 }
 
-func handle(_ http.ResponseWriter, r *http.Request) {
+func handle(w http.ResponseWriter, r *http.Request) {
+	var values []string
+	err := render.DecodeJSON(r.Body, values)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, map[string]string{"message": "Unable to decode request"})
+		return
+	}
+	defer func() {
+		_ = r.Body.Close()
+	}()
+	go updateRequestedImages(values)
 	render.Status(r, http.StatusOK)
+}
+
+func updateRequestedImages(images []string) {
+	for index := range images {
+		err := containers.UpdateMatchingContainers(images[index])
+		if err != nil {
+			log.Error().Err(err).Str("Image", images[index]).Msg("Unable to update container")
+			continue
+		}
+		log.Info().Str("Image", images[index]).Msg("Updated container")
+	}
 }
 
 func createLogger(debug bool) *zerolog.Logger {

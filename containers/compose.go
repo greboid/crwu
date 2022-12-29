@@ -58,21 +58,21 @@ func GetComposeProjectsFromContainers(containers []dtypes.Container) []ComposePr
 	}))
 }
 
-func UpdateComposeProject(name string, composeFile string, workingDir string) error {
-	env, err := composeEnv(workingDir)
+func UpdateComposeProject(composeProject ComposeProject) error {
+	env, err := composeEnv(composeProject.dir)
 	if err != nil {
 		return err
 	}
-	composeContents, err := os.ReadFile(composeFile)
+	composeContents, err := os.ReadFile(composeProject.file)
 	project, err := loader.Load(types.ConfigDetails{
-		WorkingDir: workingDir,
+		WorkingDir: composeProject.dir,
 		ConfigFiles: []types.ConfigFile{{
-			Filename: composeFile,
+			Filename: composeProject.file,
 			Content:  composeContents,
 		}},
 		Environment: env,
 	}, func(options *loader.Options) {
-		options.SetProjectName(name, true)
+		options.SetProjectName(composeProject.name, true)
 	})
 	if err != nil {
 		return err

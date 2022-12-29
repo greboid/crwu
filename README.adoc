@@ -28,7 +28,7 @@ services:
     environment:
       IN_TOKEN: RandomAuthToken
       OUT_TOKEN: AnotherRandomToken
-      EXECUTOR_URL: https://example.com
+      EXECUTOR_URL: http://executor:3000
     networks:
       - public
       - internal

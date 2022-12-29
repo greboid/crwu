@@ -26,7 +26,9 @@ services:
     command: /listener
     ports: 80:3000
     environment:
-      TOKEN: RandomAuthToken
+      IN_TOKEN: RandomAuthToken
+      OUT_TOKEN: AnotherRandomToken
+      EXECUTOR_URL: https://example.com
     networks:
       - public
       - internal
@@ -34,7 +36,7 @@ services:
     image: ghcr.io/greboid/rwtccus:latest
     command: /executor
     environment:
-      TOKEN: RandomAuthToken
+      IN_TOKEN: AnotherRandomToken
     networks:
       - internal
     volumes:

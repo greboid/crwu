@@ -9,12 +9,54 @@ import (
 	"github.com/docker/cli/cli/flags"
 	"github.com/docker/compose/v2/pkg/api"
 	"github.com/docker/compose/v2/pkg/compose"
+	dtypes "github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/client"
 	"github.com/samber/lo"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
 )
+
+type ComposeProject struct {
+	name string
+	file string
+	dir  string
+}
+
+func GetMatchingContainers(name string) ([]dtypes.Container, []dtypes.Container, error) {
+	var cContainers []dtypes.Container
+	var sContainers []dtypes.Container
+	dclient, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		return nil, nil, err
+	}
+	listOptions := dtypes.ContainerListOptions{}
+	listOptions.Filters = filters.NewArgs(filters.Arg("ancestor", name))
+	containers, err := dclient.ContainerList(context.Background(), listOptions)
+	if err != nil {
+		return nil, nil, err
+	}
+	for index := range containers {
+		if isCompose(containers[index]) {
+			cContainers = append(cContainers, containers[index])
+		} else {
+			sContainers = append(sContainers, containers[index])
+		}
+	}
+	return cContainers, sContainers, nil
+}
+
+func GetComposeProjectsFromContainers(containers []dtypes.Container) []ComposeProject {
+	return lo.Uniq(lo.Map(containers, func(item dtypes.Container, index int) ComposeProject {
+		return ComposeProject{
+			name: item.Labels[api.ProjectLabel],
+			file: item.Labels[api.ConfigFilesLabel],
+			dir:  item.Labels[api.WorkingDirLabel],
+		}
+	}))
+}
 
 func UpdateComposeProject(name string, composeFile string, workingDir string) error {
 	env, err := composeEnv(workingDir)
@@ -89,4 +131,13 @@ func envSliceToMap(input []string) map[string]string {
 		}
 		return split[0], split[1]
 	})
+}
+
+func isCompose(container dtypes.Container) bool {
+	for key := range container.Labels {
+		if key == api.ProjectLabel {
+			return true
+		}
+	}
+	return false
 }

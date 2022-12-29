@@ -9,7 +9,6 @@ import (
 	"github.com/docker/cli/cli/flags"
 	"github.com/docker/compose/v2/pkg/api"
 	"github.com/docker/compose/v2/pkg/compose"
-	"github.com/rs/zerolog/log"
 	"github.com/samber/lo"
 	"os"
 	"path/filepath"
@@ -17,22 +16,25 @@ import (
 	"time"
 )
 
-func UpdateComposeProject(composeFile string, workingDir string) error {
+func UpdateComposeProject(name string, composeFile string, workingDir string) error {
 	env, err := composeEnv(workingDir)
 	if err != nil {
 		return err
 	}
+	composeContents, err := os.ReadFile(composeFile)
 	project, err := loader.Load(types.ConfigDetails{
 		WorkingDir: workingDir,
 		ConfigFiles: []types.ConfigFile{{
 			Filename: composeFile,
+			Content:  composeContents,
 		}},
 		Environment: env,
+	}, func(options *loader.Options) {
+		options.SetProjectName(name, true)
 	})
 	if err != nil {
 		return err
 	}
-	log.Debug().Interface("project", project).Msg("Project loaded")
 	dcli, err := command.NewDockerCli()
 	if err != nil {
 		return err

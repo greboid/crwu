@@ -42,11 +42,12 @@ func main() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-	var values []string
-	err := render.DecodeJSON(r.Body, values)
+	values := make([]string, 0)
+	err := render.DecodeJSON(r.Body, &values)
 	if err != nil {
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, map[string]string{"message": "Unable to decode request"})
+		log.Error().Err(err).Msg("Unable to decode request")
 		return
 	}
 	defer func() {
@@ -58,12 +59,14 @@ func handle(w http.ResponseWriter, r *http.Request) {
 
 func updateRequestedImages(images []string) {
 	for index := range images {
-		err := containers.UpdateMatchingContainers(images[index])
+		number, err := containers.UpdateMatchingContainers(images[index])
 		if err != nil {
-			log.Error().Err(err).Str("Image", images[index]).Msg("Unable to update container")
+			log.Error().Err(err).Str("Image", images[index]).Msg("Unable to update containers")
 			continue
 		}
-		log.Info().Str("Image", images[index]).Msg("Updated container")
+		if number > 0 {
+			log.Info().Str("Image", images[index]).Int("Count", number).Msg("Updated containers")
+		}
 	}
 }
 

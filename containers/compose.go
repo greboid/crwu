@@ -26,22 +26,25 @@ type ComposeProject struct {
 	dir  string
 }
 
-func UpdateMatchingContainers(name string) error {
+func UpdateMatchingContainers(name string) (int, error) {
 	var composeContainers, standaloneContainers []dtypes.Container
 	var err error
 	if composeContainers, standaloneContainers, err = GetMatchingContainers(name); err != nil {
-		return err
+		return 0, err
 	}
 	lo.ForEach(standaloneContainers, func(item dtypes.Container, _ int) {
 		log.Info().Strs("Container names", item.Names).Msg("Standalone container needs updating")
 	})
+	count := 0
 	lo.ForEach(GetComposeProjectsFromContainers(composeContainers), func(item ComposeProject, _ int) {
 		err = UpdateComposeProject(item)
 		if err != nil {
 			log.Error().Err(err).Str("Project", item.name).Msg("Unable to update project")
+		} else {
+			count++
 		}
 	})
-	return nil
+	return count, nil
 }
 
 func GetMatchingContainers(name string) ([]dtypes.Container, []dtypes.Container, error) {

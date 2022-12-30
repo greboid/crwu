@@ -2,20 +2,24 @@
 
 Registry Webhook Triggered Composefile Container Update System.  I'll rename this when stable, the current name is an in joke for my inability to name projects sensibly.
 
-== Status
-I've written some code that may or may not work, but its completely untested
-
 == Why?
 
 Why not just use watchtower? Watchtower has to poll the registry to wait for updates, this is fairly inefficient but is sometimes the only option. If you can get webhooks from the registry however, it is more efficient to listen to these and update containers as required.
 
-== How
+== Docs
 
 This consists of two binaries, one that listens for registry events, the other that triggers updates, the docker socket it only exposed to the executor.  The executor then checks if a matching container is running and updates this as needed.
 
+As this is currently being done by executing docker compose, the executor has to have access to the docker socket,
+as such the container needs to be run as root in addition to being privileged, so it can bind mount things
+as required to get docker-compose working.
+
+It is expected that you have all your composefiles are either in the same directory, or share a common parent directory
+you tell the executor where this is and to mount this in so it can adjust things accordingly.
+
 == Example Composefile
 
-[source,yaml,line-comment=#]
+[source,yaml]
 ----
 networks:
   public:
@@ -35,11 +39,14 @@ services:
   executor:
     image: ghcr.io/greboid/rwtccus:latest
     command: /executor
+    privileged: true
     environment:
       IN_TOKEN: AnotherRandomToken
+      COMPOSE_DIR: <compose directory>
     networks:
       - internal
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # <1>
+      - <compose directory>:/compose:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/composemount/var/run/docker.sock
 ----
-<1> This can be replaced with a DOCKER_HOST environmental variable if you are using tcp

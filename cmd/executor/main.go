@@ -13,18 +13,22 @@ import (
 	"github.com/rs/zerolog/log"
 	"net/http"
 	"os"
+	"os/exec"
+	"path/filepath"
 )
 
 var (
-	WebPort     = flag.Int("web-port", 3000, "Port for webserver")
-	Debug       = flag.Bool("debug", true, "Enable debug logging")
-	InboundAuth = flag.String("in-token", "", "Token sent in the as auth bearer to validate request")
+	WebPort              = flag.Int("web-port", 3000, "Port for webserver")
+	Debug                = flag.Bool("debug", true, "Enable debug logging")
+	InboundAuth          = flag.String("in-token", "", "Token sent in the as auth bearer to validate request")
+	ComposeFileDirectory = flag.String("compose-dir", "/", "Prefix for all compose files, used to read compose/env files")
 )
 
 func main() {
 	envflag.Parse()
 	logger := createLogger(*Debug)
 	log.Info().Msg("Starting rwtccus executor")
+	mountBinaries()
 	r := chi.NewRouter()
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(middleware.URLFormat)
@@ -39,6 +43,17 @@ func main() {
 		log.Error().Err(err).Msg("error running server")
 	}
 	log.Info().Msg("Exiting")
+}
+
+func mountBinaries() {
+	err := exec.Command("/bin/mkdir", "-p", fmt.Sprintf("%s/%s", "/composemount", *ComposeFileDirectory)).Run()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Unable to create mount point")
+	}
+	err = exec.Command("/bin/mount", "--bind", "/compose", filepath.Join("/composemount", *ComposeFileDirectory)).Run()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Unable to bind mount")
+	}
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
@@ -66,6 +81,8 @@ func updateRequestedImages(images []string) {
 		}
 		if number > 0 {
 			log.Info().Str("Image", images[index]).Int("Count", number).Msg("Updated containers")
+		} else {
+			log.Info().Str("Image", images[index]).Int("Count", number).Msg("No matching containers")
 		}
 	}
 }

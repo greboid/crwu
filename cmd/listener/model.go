@@ -1,7 +1,5 @@
 package main
 
-import "net/url"
-
 type Webhook struct {
 	Events []Event `json:"events"`
 }
@@ -13,9 +11,9 @@ type Event struct {
 }
 
 type Target struct {
-	Repository string  `json:"repository"`
-	URL        url.URL `json:"url"`
-	Tag        string  `json:"tag"` //only on push
+	Repository string `json:"repository"`
+	URL        string `json:"url"`
+	Tag        string `json:"tag"` //only on push
 }
 
 type Source struct {

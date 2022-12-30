@@ -14,6 +14,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 )
@@ -30,6 +31,12 @@ func main() {
 	envflag.Parse()
 	logger := createLogger(*Debug)
 	log.Info().Msg("Starting rwtccus listener")
+	if ExecutorURL == nil || *ExecutorURL == "" {
+		log.Fatal().Msg("Executor URL is required")
+	}
+	if _, err := url.Parse(*ExecutorURL); err != nil {
+		log.Fatal().Err(err).Msg("Unable to parse executor")
+	}
 	r := chi.NewRouter()
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(middleware.URLFormat)
@@ -47,11 +54,18 @@ func main() {
 }
 
 func handleWebhook(w http.ResponseWriter, r *http.Request) {
-	var webhook *Webhook
-	err := render.DecodeJSON(r.Body, webhook)
+	bodyBytes, err := io.ReadAll(r.Body)
 	defer func() {
 		_ = r.Body.Close()
 	}()
+	if err != nil {
+		log.Error().Err(err).Msg("Error reading body")
+		render.Status(r, http.StatusOK)
+		render.JSON(w, r, map[string]string{"message": "OK"})
+		return
+	}
+	webhook := &Webhook{}
+	err = render.DecodeJSON(bytes.NewReader(bodyBytes), webhook)
 	if err != nil {
 		//Whilst we can't process this, send an OK response to the registry
 		//Webhooks backup on the registry if they're not accepted causing issues
@@ -70,7 +84,20 @@ func sendRequestToExecutor(webhook *Webhook) {
 	}
 	var images []string
 	for index := range webhook.Events {
-		images = append(images, webhook.Events[index].Target.Tag)
+		switch webhook.Events[index].Action {
+		case "pull":
+			//Discard
+			break
+		case "push":
+			log.Debug().Interface("Webhook event", webhook.Events[index]).Msg("Push received")
+			images = append(images, fmt.Sprintf("%s/%s:%s", webhook.Events[index].Request.Host, webhook.Events[index].Target.Repository, webhook.Events[index].Target.Tag))
+			break
+		default:
+			log.Debug().Interface("Webhook event", webhook.Events[index]).Msg("Unknown webhook action")
+		}
+	}
+	if len(images) == 0 {
+		return
 	}
 	jsonBytes, err := json.Marshal(images)
 	if err != nil {

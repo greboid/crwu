@@ -36,7 +36,7 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(web.AuthMiddleware(*InboundToken))
 	r.Use(web.LoggerMiddleware(logger))
-	r.Get("/", handleWebhook)
+	r.Post("/", handleWebhook)
 	log.Info().Str("URL", fmt.Sprintf("http://0.0.0.0:%d", *WebPort)).Msg("Starting webserver")
 	ws := web.Web{}
 	ws.Init(*WebPort, r)

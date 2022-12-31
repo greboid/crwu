@@ -6,16 +6,19 @@ Registry Webhook Triggered Composefile Container Update System.  I'll rename thi
 
 Why not just use watchtower? Watchtower has to poll the registry to wait for updates, this is fairly inefficient but is sometimes the only option. If you can get webhooks from the registry however, it is more efficient to listen to these and update containers as required.
 
+As for how it does updates, I may well change this to update containers via the docker API, but at the minute this does
+execute docker compose and this does come with some downsides.
+
 == Docs
+
+It is expected that you have all your composefiles are either in the same directory, or share a common parent directory
+you tell the executor where this is and mount this in, enabling the container to perform updates.
 
 This consists of two binaries, one that listens for registry events, the other that triggers updates, the docker socket it only exposed to the executor.  The executor then checks if a matching container is running and updates this as needed.
 
 As this is currently being done by executing docker compose, the executor has to have access to the docker socket,
-as such the container needs to be run as root in addition to being privileged, so it can bind mount things
-as required to get docker-compose working.
-
-It is expected that you have all your composefiles are either in the same directory, or share a common parent directory
-you tell the executor where this is and to mount this in so it can adjust things accordingly.
+as such the container needs to be run as root and be able to perform bind mounts inside the container, this means the
+container also required the SYS_ADMIN capability.
 
 == Example Composefile
 
@@ -39,7 +42,8 @@ services:
   executor:
     image: ghcr.io/greboid/rwtccus:latest
     command: /executor
-    privileged: true
+    cap_add:
+      - SYS_ADMIN
     environment:
       IN_TOKEN: AnotherRandomToken
       COMPOSE_DIR: <compose directory>

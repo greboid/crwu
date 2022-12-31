@@ -8,16 +8,13 @@ RUN set -eux; \
 
 WORKDIR /src
 RUN CGO_ENABLED=0 GOOS=linux go install -a -trimpath -ldflags="-extldflags \"-static\" -buildid= -s -w" ./...
-RUN ls -lR /build
-RUN /build/cmd
 
 FROM ghcr.io/greboid/dockerfiles/golang as build
 
 ENV GOBIN /build
 
 WORKDIR /src
-COPY go.mod /src
-COPY go.sum /src
+COPY go.mod go.sum /src/
 RUN go mod download
 
 COPY . /src

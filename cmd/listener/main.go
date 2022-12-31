@@ -43,7 +43,7 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(web.AuthMiddleware(*InboundToken))
 	r.Use(web.LoggerMiddleware(logger))
-	r.Post("/", handleWebhook)
+	r.Post("/distribution", handleDistributionWebhook)
 	log.Info().Str("URL", fmt.Sprintf("http://0.0.0.0:%d", *WebPort)).Msg("Starting webserver")
 	ws := web.Web{}
 	ws.Init(*WebPort, r)
@@ -53,7 +53,7 @@ func main() {
 	log.Info().Msg("Exiting")
 }
 
-func handleWebhook(w http.ResponseWriter, r *http.Request) {
+func handleDistributionWebhook(w http.ResponseWriter, r *http.Request) {
 	bodyBytes, err := io.ReadAll(r.Body)
 	defer func() {
 		_ = r.Body.Close()

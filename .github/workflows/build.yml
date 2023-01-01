@@ -7,7 +7,5 @@ on:
       - v*
 jobs:
   container:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
+    uses: greboid/.github/.github/workflows/checkout-build-and-push-docker.yml@master
     secrets: inhetit

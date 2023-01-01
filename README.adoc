@@ -4,7 +4,7 @@ Registry Webhook Triggered Composefile Container Update System.  I'll rename thi
 
 == Status
 
-There is currently no stable release for this, it does work as below, but I'm not sure I'm happy with this, so things may change
+There is currently no stable release for this, it does work as below, but I'm not sure I'm happy with this, so things may change.
 
 == Why?
 

@@ -2,6 +2,10 @@
 
 Registry Webhook Triggered Composefile Container Update System.  I'll rename this when stable, the current name is an in joke for my inability to name projects sensibly.
 
+== Status
+
+There is currently no stable release for this, it does work as below, but I'm not sure I'm happy with this, so things may change
+
 == Why?
 
 Why not just use watchtower? Watchtower has to poll the registry to wait for updates, this is fairly inefficient but is sometimes the only option. If you can get webhooks from the registry however, it is more efficient to listen to these and update containers as required.

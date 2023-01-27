@@ -8,7 +8,7 @@ require (
 	github.com/docker/docker v20.10.20+incompatible
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
-	github.com/rs/zerolog v1.28.0
+	github.com/rs/zerolog v1.29.0
 	github.com/samber/lo v1.37.0
 	golang.org/x/sync v0.1.0
 )

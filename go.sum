@@ -4,8 +4,8 @@ github.com/Microsoft/go-winio v0.5.2 h1:a9IhgEQBCUEk6QCdml9CiJGhAws+YwffDHEMp1VM
 github.com/Microsoft/go-winio v0.5.2/go.mod h1:WpS1mjBmmwHBEWmogvA2mj8546UReBk4v8QkMxJ6pZY=
 github.com/ajg/form v1.5.1 h1:t9c7v8JUKu/XxOGBU0yjNpaMloxGEJhUkqFRq0ibGeU=
 github.com/ajg/form v1.5.1/go.mod h1:uL1WgH+h2mgNtvBq0339dVnzXdBETtL2LeUXaIv25UY=
-github.com/compose-spec/compose-go v1.8.2 h1:sUQvDxnPgpcOyoxC/lz7mFTrTlHeZ6LWyuASYetkOqw=
-github.com/compose-spec/compose-go v1.8.2/go.mod h1:Tb5Ae2PsYN3GTqYqzl2IRbTPiJtPZZjMw8UKUvmehFk=
+github.com/compose-spec/compose-go v1.9.0 h1:oaewhNhUP/AClVs6ytHzcjw1xwK+2EMWuvHXj6tYvRc=
+github.com/compose-spec/compose-go v1.9.0/go.mod h1:Tb5Ae2PsYN3GTqYqzl2IRbTPiJtPZZjMw8UKUvmehFk=
 github.com/coreos/go-systemd/v22 v22.3.3-0.20220203105225-a9a7ef127534/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
 github.com/creack/pty v1.1.11 h1:07n33Z8lZxZ2qwegKbObQohDhXDQxiMMz1NOUGYlesw=
 github.com/csmith/envflag v1.0.0 h1:ARMp9RyT/+1eMevJrB0cQeHxBlGpnoLSjuPdGVINzIA=
@@ -17,8 +17,8 @@ github.com/distribution/distribution/v3 v3.0.0-20221201083218-92d136e113cf h1:q0
 github.com/distribution/distribution/v3 v3.0.0-20221201083218-92d136e113cf/go.mod h1:4x0IxAMsdeCSTr9UopCvp6MnryD2nyRLycsOrgvveAs=
 github.com/docker/cli v20.10.3-0.20221013132413-1d6c6e2367e2+incompatible h1:je9pK1shVhf561ujVYyn8ycOEfbgXFXryWxNqkYqsxg=
 github.com/docker/cli v20.10.3-0.20221013132413-1d6c6e2367e2+incompatible/go.mod h1:JLrzqnKDaYBop7H2jaqPtU4hHvMKP+vjCwu2uszcLI8=
-github.com/docker/compose/v2 v2.15.1 h1:FcUhUso8KbPnUH4zTDZhTWxnJKE3lRnh+CjecCRd6bo=
-github.com/docker/compose/v2 v2.15.1/go.mod h1:jxA1QXisQrcKyMMFT/f7Z9XfPn/YkaNu2ZkLeTSdWno=
+github.com/docker/compose/v2 v2.16.0 h1:tPKsuRGTwabEgcN2mRF40ym+NdoXSvybUszKIu8Mz0Y=
+github.com/docker/compose/v2 v2.16.0/go.mod h1:itiUhP/NbIpsAl7Edu5XUpRAoyz2rQPA17aOlSHtnhw=
 github.com/docker/distribution v2.8.1+incompatible h1:Q50tZOPR6T/hjNsyc9g8/syEs6bk8XXApsHjKukMl68=
 github.com/docker/distribution v2.8.1+incompatible/go.mod h1:J2gT2udsDAN96Uj4KfcMRqY0/ypR+oyYUYmja8H+y+w=
 github.com/docker/docker v20.10.3-0.20221021173910-5aac513617f0+incompatible h1:s5C/kGjAucPHfx9nwIKZOCNvKOEiRUgJxQpwSmr2+RU=
@@ -99,11 +99,11 @@ golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20210927094055-39ccf1dd6fa6/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
-golang.org/x/sys v0.3.0 h1:w8ZOecv6NaNa/zC8944JTU3vz4u6Lagfk4RPQxv92NQ=
-golang.org/x/sys v0.3.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.4.0 h1:Zr2JFtRQNX3BCZ8YtxRE9hNJYC8J6I1MVbMg6owUp18=
+golang.org/x/sys v0.4.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.3/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
-golang.org/x/time v0.0.0-20220210224613-90d013bbcef8 h1:vVKdlvoWBphwdxWKrFZEuM0kGgGLxUOYcY4U/2Vjg44=
+golang.org/x/time v0.1.0 h1:xYY+Bajn2a7VBmTM5GikTmnK8ZuX8YgnQCqZpbBNtmA=
 golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20191119224855-298f0cb1881e/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
 golang.org/x/tools v0.0.0-20200619180055-7c47624df98f/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=

@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/csmith/envflag v1.0.0
-	github.com/docker/compose/v2 v2.15.1
-	github.com/docker/docker v20.10.20+incompatible
+	github.com/docker/compose/v2 v2.16.0
+	github.com/docker/docker v23.0.0+incompatible
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
 	github.com/rs/zerolog v1.29.0
@@ -17,9 +17,9 @@ require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.5.2 // indirect
 	github.com/ajg/form v1.5.1 // indirect
-	github.com/compose-spec/compose-go v1.8.2 // indirect
+	github.com/compose-spec/compose-go v1.9.0 // indirect
 	github.com/distribution/distribution/v3 v3.0.0-20221201083218-92d136e113cf // indirect
-	github.com/docker/cli v20.10.20+incompatible // indirect
+	github.com/docker/cli v23.0.0+incompatible // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
@@ -35,7 +35,7 @@ require (
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 	golang.org/x/net v0.4.0 // indirect
-	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/sys v0.4.0 // indirect
 )
 
 replace (

@@ -4,8 +4,8 @@ go 1.20
 
 require (
 	github.com/csmith/envflag v1.0.0
-	github.com/docker/compose/v2 v2.17.2
-	github.com/docker/docker v23.0.3+incompatible
+	github.com/docker/compose/v2 v2.17.3
+	github.com/docker/docker v23.0.4+incompatible
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
 	github.com/rs/zerolog v1.29.1
@@ -20,7 +20,7 @@ require (
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/compose-spec/compose-go v1.13.2 // indirect
+	github.com/compose-spec/compose-go v1.13.4 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/containerd/containerd v1.7.0 // indirect
 	github.com/containerd/continuity v0.3.1-0.20230206214859-2a963a2f56e8 // indirect
@@ -31,7 +31,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/distribution/distribution/v3 v3.0.0-20230327091844-0c958010ace2 // indirect
 	github.com/docker/buildx v0.10.4 // indirect
-	github.com/docker/cli v23.0.3+incompatible // indirect
+	github.com/docker/cli v23.0.4+incompatible // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.7.0 // indirect
 	github.com/docker/go v1.5.1-1.0.20160303222718-d30aec9fd63c // indirect

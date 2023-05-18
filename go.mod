@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/csmith/envflag v1.0.0
-	github.com/docker/compose/v2 v2.18.0
+	github.com/docker/compose/v2 v2.18.1
 	github.com/docker/docker v23.0.6+incompatible
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2

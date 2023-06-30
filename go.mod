@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/csmith/envflag v1.0.0
-	github.com/docker/compose/v2 v2.19.0
+	github.com/docker/compose/v2 v2.19.1
 	github.com/docker/docker v24.0.2+incompatible
 	github.com/go-chi/chi/v5 v5.0.8
 	github.com/go-chi/render v1.0.2
@@ -20,7 +20,7 @@ require (
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/compose-spec/compose-go v1.15.0 // indirect
+	github.com/compose-spec/compose-go v1.15.1 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/containerd/containerd v1.7.2 // indirect
 	github.com/containerd/continuity v0.4.1 // indirect

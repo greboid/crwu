@@ -6,7 +6,7 @@ require (
 	github.com/csmith/envflag v1.0.0
 	github.com/docker/compose/v2 v2.20.2
 	github.com/docker/docker v24.0.5-0.20230714235725-36e9e796c6fc+incompatible
-	github.com/go-chi/chi/v5 v5.0.8
+	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-chi/render v1.0.3
 	github.com/rs/zerolog v1.30.0
 	github.com/samber/lo v1.38.1

@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/csmith/envflag v1.0.0
-	github.com/docker/compose/v2 v2.20.3
+	github.com/docker/compose/v2 v2.21.0
 	github.com/docker/docker v24.0.5+incompatible
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-chi/render v1.0.3
@@ -20,7 +20,7 @@ require (
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/compose-spec/compose-go v1.18.1 // indirect
+	github.com/compose-spec/compose-go v1.18.3 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/containerd/containerd v1.7.3 // indirect
 	github.com/containerd/continuity v0.4.1 // indirect
@@ -64,7 +64,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/moby/buildkit v0.12.1 // indirect
 	github.com/moby/locker v1.0.1 // indirect
-	github.com/moby/patternmatcher v0.5.0 // indirect
+	github.com/moby/patternmatcher v0.6.0 // indirect
 	github.com/moby/sys/sequential v0.5.0 // indirect
 	github.com/moby/sys/signal v0.7.0 // indirect
 	github.com/moby/term v0.5.0 // indirect

@@ -10,7 +10,7 @@ require (
 	github.com/go-chi/render v1.0.3
 	github.com/rs/zerolog v1.31.0
 	github.com/samber/lo v1.38.1
-	golang.org/x/sync v0.3.0
+	golang.org/x/sync v0.4.0
 )
 
 require (
